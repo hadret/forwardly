@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "forwardly"
+version = "0.0.1"
+description = "Tiny API endpoint to transform POST to GET"
+authors = ["Filip Chabik <hadret@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.93.0"
+uvicorn = "^0.20.0"
+requests = "^2.28.2"
+python-dotenv = "^1.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
