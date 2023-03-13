@@ -2,7 +2,7 @@ from datetime import datetime
 from functools import lru_cache
 
 import requests
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.responses import RedirectResponse
 from pydantic import BaseModel, BaseSettings
 
@@ -60,10 +60,18 @@ def redirect():
     return "https://github.com/hadret/forwardly"
 
 
+# Incoming alerts debugging
 @app.post("/{token}")
-def forward(am: Alerts, token: str, settings: Settings = Depends(get_settings)):
-    if token in settings.kuma_tokens:
-        kuma = requests.get(f"{settings.kuma_url}/{token}")
-        return am, kuma.json()
-    else:
-        raise HTTPException(status_code=401, detail="Unauthorized”")
+async def inspect(token: str, r: Request, s: Settings = Depends(get_settings)):
+    body = await r.json()
+    print(body)
+    return body
+
+
+# def forward(am: Alerts, token: str, settings: Settings = Depends(get_settings)):
+#     if token in settings.kuma_tokens:
+#         kuma = requests.get(f"{settings.kuma_url}/{token}")
+#         print(am)
+#         return am, kuma.json()
+#     else:
+#         raise HTTPException(status_code=401, detail="Unauthorized")

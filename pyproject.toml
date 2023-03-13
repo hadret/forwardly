@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "forwardly"
-version = "1.0.2"
+version = "1.0.3"
 description = "Tiny API endpoint to transform POST to GET"
 authors = ["Filip Chabik <hadret@gmail.com>"]
 license = "MIT"
