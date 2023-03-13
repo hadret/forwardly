@@ -15,7 +15,6 @@ class Alert(BaseModel):
 
 class Settings(BaseSettings):
     env_name: str = "Local"
-    base_url: str = "http://127.0.0.1:8000"
     base_uuid: str = "00000000-0000-0000-0000-000000000000"
     kuma_url: str = "http://127.0.0.1:3001"
 
