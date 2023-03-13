@@ -1,3 +1,4 @@
+from datetime import datetime
 from functools import lru_cache
 
 import requests
@@ -8,10 +9,36 @@ from pydantic import BaseModel, BaseSettings
 app = FastAPI(docs_url=None, redoc_url=None)
 
 
-class Alert(BaseModel):
-    status: str = "firing"
+class Labels(BaseModel):
+    alertname: str
+    dc: str | None = None
+    instance: str | None = None
+    job: str
+
+
+class Annotations(BaseModel):
+    description: str
+
+
+class SingleAlert(BaseModel):
+    annotations: Annotations
+    labels: Labels
+    status: str
+    generatorURL: str
+    startsAt: datetime | None = None
+    endsAt: datetime | None = None
+
+
+class Alerts(BaseModel):
     receiver: str
+    status: str
+    alerts: list[SingleAlert]
+    groupLabels: Labels
+    commonLabels: Labels
+    commonAnnotations: Annotations
     externalURL: str
+    version: int
+    groupKey: str
 
 
 class Settings(BaseSettings):
