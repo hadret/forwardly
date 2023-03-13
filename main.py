@@ -2,6 +2,7 @@ from functools import lru_cache
 
 import requests
 from fastapi import Depends, FastAPI, HTTPException
+from fastapi.responses import RedirectResponse
 from pydantic import BaseModel, BaseSettings
 
 app = FastAPI(docs_url=None, redoc_url=None)
@@ -25,6 +26,11 @@ class Settings(BaseSettings):
 @lru_cache()
 def get_settings():
     return Settings()
+
+
+@app.get("/", response_class=RedirectResponse, status_code=302)
+def redirect():
+    return "https://github.com/hadret/forwardly"
 
 
 @app.post("/{token}")
