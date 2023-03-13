@@ -39,4 +39,4 @@ def forward(am: Alerts, token: str, settings: Settings = Depends(get_settings)):
         kuma = requests.get(f"{settings.kuma_url}/{token}")
         return am, kuma.json()
     else:
-        raise HTTPException(status_code=404, detail="Wrong API key!")
+        raise HTTPException(status_code=401, detail="Unauthorized”")
