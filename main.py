@@ -15,8 +15,8 @@ class Alert(BaseModel):
 
 class Settings(BaseSettings):
     env_name: str = "Local"
-    base_uuid: str = "00000000-0000-0000-0000-000000000000"
     kuma_url: str = "http://127.0.0.1:3001"
+    kuma_tokens: list[str] = ["AAaaAaAaaa"]
 
     class Config:
         env_file = ".env"
@@ -27,10 +27,10 @@ def get_settings():
     return Settings()
 
 
-@app.post("/{uuid}")
-def forward(uuid: str, settings: Settings = Depends(get_settings)):
-    if uuid == settings.base_uuid:
-        kuma = requests.get(settings.kuma_url)
-        return kuma.json()
+@app.post("/{token}")
+def forward(am: Alerts, token: str, settings: Settings = Depends(get_settings)):
+    if token in settings.kuma_tokens:
+        kuma = requests.get(f"{settings.kuma_url}/{token}")
+        return am, kuma.json()
     else:
         raise HTTPException(status_code=404, detail="Wrong API key!")
