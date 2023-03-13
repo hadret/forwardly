@@ -10,35 +10,35 @@ app = FastAPI(docs_url=None, redoc_url=None)
 
 
 class Labels(BaseModel):
-    alertname: str
+    alertname: str | None = None
     dc: str | None = None
     instance: str | None = None
-    job: str
+    job: str | None = None
 
 
 class Annotations(BaseModel):
-    description: str
+    description: str | None = None
 
 
 class SingleAlert(BaseModel):
-    annotations: Annotations
-    labels: Labels
-    status: str
-    generatorURL: str
+    annotations: Annotations | None = None
+    labels: Labels | None = None
+    status: str | None = None
+    generatorURL: str | None
     startsAt: datetime | None = None
     endsAt: datetime | None = None
 
 
 class Alerts(BaseModel):
-    receiver: str
-    status: str
-    alerts: list[SingleAlert]
-    groupLabels: Labels
-    commonLabels: Labels
-    commonAnnotations: Annotations
-    externalURL: str
-    version: int
-    groupKey: str
+    receiver: str | None = None
+    status: str | None = None
+    alerts: list[SingleAlert] | None = None
+    groupLabels: Labels | None = None
+    commonLabels: Labels | None = None
+    commonAnnotations: Annotations | None = None
+    externalURL: str | None = None
+    version: int | None = None
+    groupKey: str | None = None
 
 
 class Settings(BaseSettings):
